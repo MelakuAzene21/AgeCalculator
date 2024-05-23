@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculate age </title>
+    <style>
+      h1{
+        background-color: black;
+        color: white;
+        text-align: center;
+        margin-top: 20px;
+      }  
+      form{
+        box-sizing: border-box;
+        border: 3 solid black;
+        border-radius: 6px;
+        width: 100%;
+        height: 200px;
+        background-color: burlywood;
+      }
+      input{
+        width: 50%;
+        height: 25px;
+        padding: 15px;
+        margin-top: 35px;
+        border: none;
+        outline: none;
+        border-radius: 8px;
+      }
+      button{
+        
+        justify-content: space-between;
+        position: absolute;
+        top:40%;
+        left: 25%;
+      }
+      #calcage{
+        margin-right: 55px;
+        position: absolute;
+        top: 40%;
+        left:15%;
+      } 
+      #reset{
+        margin-left: 20px;
+         position: absolute;
+        top: 40%;
+        left:35%;
+
+      }
+      #msgDispalay{
+        position: absolute;
+        top: 55%;
+        left: 20%;
+        background-color: black;
+        color: white;
+        font-size: 1.5rem;
+        font-weight: 500;
+        margin-right: 15px;
+      }
+    </style>
+</head>
+<body>
+    <h1>Age Calculator</h1>
+    <form action="#">
+       <label for="dateinput">Enter Your DOB</label> <input type="date" name="dateinput" id="dateinput"><br>
+       <button type="button" id="calcage"> calculate age </button>
+       <button type="reset" id="reset">Reset</button>
+    </form>
+    <div id="msgDispalay"></div>
+
+    <script>
+        function calculateAge(){
+        var input = document.getElementById("dateinput").value;
+            var DOB = new Date(input);
+            if (input == null || input == '') {
+                document.getElementById("msgDispalay").innerHTML = "Please enter your date of birth";
+                return false;
+            }
+            else{
+
+            var dobYear = DOB.getFullYear();
+            var dobMonth = DOB.getMonth();
+            var dobDate = DOB.getDate();
+
+            var Now=new Date();
+            var currentYear=Now.getFullYear();
+            var currentMonth=Now.getMonth();
+            var currentdate=Now.getDate();
+
+            var age={};
+            var ageString="";
+
+            var yearDiff=currentYear-dobYear;
+
+            if(currentMonth>=dobMonth){
+                var month= currentMonth - dobMonth;
+            }else{
+                yearDiff--;
+                var month=12+currentMonth-dobMonth;
+            }
+
+            if(currentdate>=dobDate){
+                var day=currentdate-dobDate
+            }else{
+                month--;
+                var day= 31+currentdate-dobDate;
+
+                if(month<0){
+                    month=11;
+                   yearDiff--;
+                }
+               
+            }
+             age = {
+                y:yearDiff,
+                m:month,
+                d:day,
+                };
+
+
+                if((age.y>0)&&(age.m>0)&&(age.d>0)){
+                    ageString= "You are "+age.y+" Years and ,"+age.m+"months ,"+age.d+"days old";
+                }
+                else if((age.y==0)&&(age.m==0)(age.d>0)){
+                    ageString="You are Only"+age.d+"days old";
+                }
+                else if((age.y>0)&&(age.m==0)&&(age.d==0)){
+                 ageString="You are"+age.y+"Years\nCONGRAGULATION TODAY IS YOUR BIRTHDAY HBD"
+                }
+                else if((age.y>0)&&(age.m>0)&&(age.d==0)){
+                    ageString="You are "+age.y+"Years and"+age.m+"Month old";
+                }
+                else if((age.y==0)&&(age.m>0)&&(age.d>0)){
+                    ageString="you are"+age.m+"month and"+age.d + "Days old";
+                }
+                else  if((age.y>0)&&(age.m==0)&&(age.d>0)){
+                    ageString="You are"+age.y+"years and"+age.d+"days";
+                }
+                else if((age.y==0)&&(age.m>0)&&(age.d)){
+                ageString="You are "+age.m + " Month only"; 
+               }
+               else ageString="WELCOME TO EARTH \n YOU ARE BORNING TODAY";
+                 
+               return document.getElementById("msgDispalay").innerHTML=ageString;
+               
+            }
+        }
+       document.getElementById("calcage").addEventListener("click",calculateAge);
+    </script>
+</body>
+</html>
